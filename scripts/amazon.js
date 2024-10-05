@@ -1,5 +1,5 @@
 import { products } from "../data/products.js";
-import { cart } from "../data/cart.js";
+import { cart, addToCart } from "../data/cart.js";
 
 /******the products html to be displayed on the webpage******/
 let productsHTML = "";
@@ -61,6 +61,19 @@ products.forEach((product) => {
   `;
 });
 
+
+
+// function to update the cart quantity
+function updateCartQuantity() {
+  let totalCartQuantity = 0;
+
+  cart.forEach((cartItem) => {
+    totalCartQuantity += cartItem.quantity;
+  });
+
+  document.querySelector(".js-cart-quantity").innerText = totalCartQuantity;
+}
+
 /******displaying the products on the webpage
  ******/
 document.querySelector(".js-products-grid").innerHTML = productsHTML;
@@ -91,36 +104,10 @@ document.querySelectorAll(".js-add-to-cart").forEach((button) => {
 
     previousTimeoutIds[productId] = timeoutId;
 
-    // checking if the product has already been added to the cart
-    let matchingItem;
-
-    cart.forEach((cartItem) => {
-      if (cartItem.productId === productId) {
-        matchingItem = cartItem;
-      }
-    });
-
-    // getting the quantity from the selectors
-    const qtySelected = Number(
-      document.querySelector(`.js-input-quantity-${productId}`).value
-    );
-
-    if (matchingItem) {
-      matchingItem.quantity += qtySelected;
-    } else {
-      cart.push({
-        productId,
-        quantity: qtySelected,
-      });
-    }
+    //add product to the cart
+    addToCart(productId);
 
     // calculating the total cart quantity
-    let totalCartQuantity = 0;
-
-    cart.forEach((cartItem) => {
-      totalCartQuantity += cartItem.quantity;
-    });
-
-    document.querySelector(".js-cart-quantity").innerText = totalCartQuantity;
+    updateCartQuantity();
   });
 });
