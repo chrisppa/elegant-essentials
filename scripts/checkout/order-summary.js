@@ -168,11 +168,6 @@ export function renderOrderSummary() {
 
       updateCart(productId, newQuantity);
 
-      const container = document.querySelector(
-        `.js-cart-item-container-${productId}`
-      );
-      container.classList.remove("is-editing-quantity");
-
       renderOrderSummary();
       renderPaymentSummary();
     });
