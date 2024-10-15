@@ -8,8 +8,9 @@ import {
 import { products } from "../../data/products.js";
 import { formatCurrency } from ".././utils/money.js";
 import { deliveryOptions } from "../../data/delivery_options.js";
+import dayjs from "https://unpkg.com/dayjs@1.8.8/esm/index.js";
 
- export function renderOrderSummary() {
+export function renderOrderSummary() {
   updateCartQuantity();
   let cartSummaryHTML = "";
   cart.forEach((cartItem) => {
@@ -23,11 +24,23 @@ import { deliveryOptions } from "../../data/delivery_options.js";
       }
     });
 
+    let deliveryOption;
+
+    deliveryOptions.forEach((option) => {
+      if (option.id === cartItem.deliveryOptionId) {
+        deliveryOption = option;
+      }
+    });
+
+    const today = dayjs();
+    const deliveryDate = today.add(deliveryOption.deliveryDays, "days");
+    const dateString = deliveryDate.format("dddd, MMMM D");
+
     cartSummaryHTML += `
       <div class="cart-item-container js-cart-item-container-${
         matchingItem.id
       }">
-        <div class="delivery-date">Delivery date: Tuesday, June 21</div>
+        <div class="delivery-date">Delivery date: ${dateString}</div>
 
         <div class="cart-item-details-grid">
           <img
@@ -83,6 +96,10 @@ import { deliveryOptions } from "../../data/delivery_options.js";
     let html = "";
 
     deliveryOptions.forEach((deliveryOption) => {
+      const today = dayjs();
+      const deliveryDate = today.add(deliveryOption.deliveryDays, "days");
+      const dateString = deliveryDate.format("dddd, MMMM D");
+      console.log(dateString);
       let priceString =
         deliveryOption.priceCents === 0
           ? "FREE "
@@ -99,7 +116,7 @@ import { deliveryOptions } from "../../data/delivery_options.js";
             name="delivery-option-${matchingItem.id}"
           />
           <div>
-            <div class="delivery-option-date">Monday, June 13</div>
+            <div class="delivery-option-date">${dateString}</div>
             <div class="delivery-option-price">${priceString}Shipping</div>
           </div>
         </div>
