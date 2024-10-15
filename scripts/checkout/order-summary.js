@@ -5,10 +5,14 @@ import {
   updateCart,
   updateDeliveryOption,
 } from "../../data/cart.js";
-import { products } from "../../data/products.js";
+import { products, getProduct } from "../../data/products.js";
 import { formatCurrency } from ".././utils/money.js";
-import { deliveryOptions } from "../../data/delivery_options.js";
+import {
+  deliveryOptions,
+  getDeliveryOption,
+} from "../../data/delivery_options.js";
 import dayjs from "https://unpkg.com/dayjs@1.8.8/esm/index.js";
+import { renderPaymentSummary } from "./payment-summary.js";
 
 export function renderOrderSummary() {
   updateCartQuantity();
@@ -16,21 +20,9 @@ export function renderOrderSummary() {
   cart.forEach((cartItem) => {
     const productId = cartItem.productId;
 
-    let matchingItem;
+    const matchingItem = getProduct(productId);
 
-    products.forEach((product) => {
-      if (product.id === productId) {
-        matchingItem = product;
-      }
-    });
-
-    let deliveryOption;
-
-    deliveryOptions.forEach((option) => {
-      if (option.id === cartItem.deliveryOptionId) {
-        deliveryOption = option;
-      }
-    });
+    const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
 
     const today = dayjs();
     const deliveryDate = today.add(deliveryOption.deliveryDays, "days");
@@ -99,7 +91,6 @@ export function renderOrderSummary() {
       const today = dayjs();
       const deliveryDate = today.add(deliveryOption.deliveryDays, "days");
       const dateString = deliveryDate.format("dddd, MMMM D");
-      console.log(dateString);
       let priceString =
         deliveryOption.priceCents === 0
           ? "FREE "
@@ -144,6 +135,7 @@ export function renderOrderSummary() {
       );
 
       container.remove();
+      renderPaymentSummary();
     });
   });
 
@@ -180,6 +172,9 @@ export function renderOrderSummary() {
         `.js-cart-item-container-${productId}`
       );
       container.classList.remove("is-editing-quantity");
+
+      renderOrderSummary();
+      renderPaymentSummary();
     });
   });
 
@@ -189,6 +184,7 @@ export function renderOrderSummary() {
       const { productId, deliveryOptionId } = option.dataset;
       updateDeliveryOption(productId, deliveryOptionId);
       renderOrderSummary();
+      renderPaymentSummary();
     });
   });
 }
