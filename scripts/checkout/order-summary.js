@@ -142,8 +142,8 @@ export function renderOrderSummary() {
   function updateCartQuantity() {
     const totalCartQuantity = calculateCartQuantity();
 
-    // document.querySelector(".js-checkout-total-cart-quantity").innerHTML =
-    //   totalCartQuantity;
+    document.querySelector(".js-checkout-total-cart-quantity").innerHTML =
+      totalCartQuantity;
   }
 
   // updating an order
