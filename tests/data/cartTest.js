@@ -1,6 +1,6 @@
 import { addToCart, cart, loadFromStorage } from "../../data/cart.js";
 
-// for the tests below to run correctly, make the qtyselected to default to 1;
+// for the tests below to run correctly, make the qtyselected in the cart.js to default to 1;
 describe("test suite: addToCart", () => {
   it("adds an existing item to the cart", () => {
     spyOn(localStorage, "setItem");

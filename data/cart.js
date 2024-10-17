@@ -38,8 +38,9 @@ export function addToCart(productId) {
   });
 
   // getting the quantity from the selectors
-  const qtySelected =
-    Number(document.querySelector(`.js-input-quantity-${productId}`).value);
+  const qtySelected = Number(
+    document.querySelector(`.js-input-quantity-${productId}`).value
+  );
 
   if (matchingItem) {
     matchingItem.quantity += qtySelected;
