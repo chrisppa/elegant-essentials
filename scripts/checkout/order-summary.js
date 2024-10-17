@@ -30,7 +30,7 @@ export function renderOrderSummary() {
     const dateString = deliveryDate.format("dddd, MMMM D");
 
     cartSummaryHTML += `
-      <div class="cart-item-container js-cart-item-container-${
+      <div class="cart-item-container js-cart-item-container js-cart-item-container-${
         matchingItem.id
       }">
         <div class="delivery-date">Delivery date: ${dateString}</div>
@@ -48,7 +48,7 @@ export function renderOrderSummary() {
             <div class="product-price">$${formatCurrency(
               matchingItem.priceCents
             )}</div>
-            <div class="product-quantity">
+            <div class="product-quantity js-product-quantity-${matchingItem.id}">
               <span class = "qty-text"> Quantity: <span class="quantity-label">${
                 cartItem.quantity
               }</span> </span>
@@ -65,7 +65,9 @@ export function renderOrderSummary() {
               <span class="save-quantity-link link-primary js-save-quantity-link" data-product-id="${
                 matchingItem.id
               }">Save</span>
-              <span class="delete-quantity-link link-primary js-delete-quantity-link" data-product-id="${
+              <span class="delete-quantity-link link-primary js-delete-quantity-link js-delete-quantity-link-${
+                matchingItem.id
+              }" data-product-id="${
                 matchingItem.id
               }">
                 Delete
@@ -140,8 +142,8 @@ export function renderOrderSummary() {
   function updateCartQuantity() {
     const totalCartQuantity = calculateCartQuantity();
 
-    document.querySelector(".js-checkout-total-cart-quantity").innerHTML =
-      totalCartQuantity;
+    // document.querySelector(".js-checkout-total-cart-quantity").innerHTML =
+    //   totalCartQuantity;
   }
 
   // updating an order
