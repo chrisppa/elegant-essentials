@@ -1,18 +1,18 @@
 class Cart {
   // saving the cart data
   cartItems;
-  localStorage;
+  #localStorageKey;
 
   // the set up code is run here
   constructor(localStorageKey) {
-    this.localStorageKey = localStorageKey;
+    this.#localStorageKey = localStorageKey;
 
-    this.loadFromStorage();
+    this.#loadFromStorage();
   }
 
   // loading from local storage
-  loadFromStorage() {
-    this.cartItems = JSON.parse(localStorage.getItem(this.localStorageKey));
+  #loadFromStorage() {
+    this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey));
 
     if (!this.cartItems) {
       this.cartItems = [
@@ -32,7 +32,7 @@ class Cart {
 
   // saving to local storage
   saveToStorage() {
-    localStorage.setItem(this.localStorageKey, JSON.stringify(this.cartItems));
+    localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems));
   }
 
   // adding product to the cart
@@ -121,8 +121,8 @@ class Cart {
   }
 }
 
-const cart = new Cart('cart-oop');
-const businessCart = new Cart('business-cart');
+const cart = new Cart("cart-oop");
+const businessCart = new Cart("business-cart");
 
 console.log(cart);
 console.log(businessCart);
