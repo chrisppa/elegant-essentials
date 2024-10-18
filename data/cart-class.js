@@ -1,7 +1,7 @@
 class Cart {
   // saving the cart data
-  cartItems = undefined;
-  localStorage = undefined;
+  cartItems;
+  localStorage;
 
   // the set up code is run here
   constructor(localStorageKey) {
