@@ -6,10 +6,14 @@ import { renderPaymentSummary } from "./checkout/payment-summary.js";
 //import "../data/backend-practice.js";
 
 async function loadCheckoutPage() {
-  await loadProductsFetch();
-  renderCheckoutHeader();
-  renderOrderSummary();
-  renderPaymentSummary();
+  try {
+    await loadProductsFetch();
+    renderCheckoutHeader();
+    renderOrderSummary();
+    renderPaymentSummary();
+  } catch (error) {
+    console.log("unexpected error. Please try again");
+  }
 }
 
 loadCheckoutPage();
