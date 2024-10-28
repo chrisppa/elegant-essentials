@@ -5,11 +5,21 @@ import { renderPaymentSummary } from "./checkout/payment-summary.js";
 // import "../data/cart-class.js";
 //import "../data/backend-practice.js";
 
+async function loadCheckoutPage() {
+  await loadProductsFetch();
+  renderCheckoutHeader();
+  renderOrderSummary();
+  renderPaymentSummary();
+}
+
+loadCheckoutPage();
+/*
 Promise.all([loadProductsFetch()]).then(() => {
   renderCheckoutHeader();
   renderOrderSummary();
   renderPaymentSummary();
 });
+*/
 
 /*
 new Promise((resolve) => {
